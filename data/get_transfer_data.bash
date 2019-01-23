@@ -261,3 +261,6 @@ do
 done
 
 rm -rf mosesdecoder
+
+chmod a+x get_word_vectors.bash
+./get_word_vectors.bash
