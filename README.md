@@ -25,7 +25,9 @@ This will automatically download and preprocess the datasets, and store them in 
 
 WARNING: Extracting the [MRPC](https://www.microsoft.com/en-us/download/details.aspx?id=52398) MSI file requires the "[cabextract](https://www.cabextract.org.uk/#install)" command line (i.e *apt-get/yum install cabextract*).
 
-This will also download **glove.840B.300d.txt** and **enwiki_vocab_min200.txt** (The SIF frequencies from Arora et al. 2016). To download the other word vectors please go to [fasttext](https://drive.google.com/uc?id=0B7XkCwpI5KDYNlNUTTlSS21pQmM&export=download) and [googlenews-word2vec](https://s3-us-west-1.amazonaws.com/fasttext-vectors/crawl-300d-2M.vec.zip) , then convert binary fails into the same text file format as **glove.840B.300d.txt** and place in /data/word_vectors
+This will also download **glove.840B.300d.txt** and **enwiki_vocab_min200.txt** (The SIF frequencies from Arora et al. 2016).
+
+To download the other word vectors please go to [GoogleNews-word2vec](https://drive.google.com/uc?id=0B7XkCwpI5KDYNlNUTTlSS21pQmM&export=download) and [GoogleNews-Word2Vec](https://s3-us-west-1.amazonaws.com/fasttext-vectors/crawl-300d-2M.vec.zip) , then convert binary fails into the same text file format as **glove.840B.300d.txt** and place in **/data/word_vectors**. We could not upload them to github since they are above allowed the disk-quota.
 
 ### Reproduce Paper Results
 
