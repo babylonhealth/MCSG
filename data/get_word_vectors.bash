@@ -12,4 +12,6 @@ curl -LO $glovepath
 unzip glove.840B.300d.zip 
 rm glove.840B.300d.zip
 
-
+cd ../auxiliary_data
+curl -LO $SIF
+cd ..
