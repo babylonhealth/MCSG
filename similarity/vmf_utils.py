@@ -72,7 +72,7 @@ def to_hypersphericalPolars(mu):
     mu_sq = mu ** 2
     rev_cumsum = np.cumsum(mu_sq[::-1])[::-1]
     rev_cumnorms = np.sqrt(rev_cumsum)
-    # import pdb; pdb.set_trace()
+
     thetas = np.arccos(mu[:-1] / rev_cumnorms[:-1])
 
     norm = la.norm(mu[-2:])
