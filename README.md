@@ -1,4 +1,4 @@
-# ICML-2019 supporting code submission for paper #960
+# ICML-2019 Supporting Code for Submission #960
 
 This repo consits of a slight set of modifications for [SentEval](https://github.com/facebookresearch/SentEval) to reproduce results in anonymous submission #960 @ICML2019. 
 
@@ -27,7 +27,7 @@ This will also download **glove.840B.300d.txt** and **enwiki_vocab_min200.txt** 
 
 To download the other word vectors please go to [GoogleNews-word2vec](https://drive.google.com/uc?id=0B7XkCwpI5KDYNlNUTTlSS21pQmM&export=download) and [GoogleNews-Word2Vec](https://s3-us-west-1.amazonaws.com/fasttext-vectors/crawl-300d-2M.vec.zip) , then convert binary fails into the same text file format as **glove.840B.300d.txt** and place in **/data/word_vectors**. We could not upload them to github since they are above allowed the disk-quota.
 
-### Reproduce Paper Results
+### Reproduce Results for Submission #960 
 
 In order to reproduce results please run:
 
