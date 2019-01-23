@@ -74,30 +74,21 @@ class STSEval(object):
                     enc1 = batcher(params, batch1)
                     enc2 = batcher(params, batch2)
 
-                    # for kk in range(enc2.shape[0]):
                     for kk in range(len(enc2)):
-                        # print(params["wvec_dim"])
                         sys_score = self.similarity(enc1[kk], enc2[kk])
                         sys_scores.append(sys_score)
-                        # import pdb; pdb.set_trace()
             sys_scores = np.asarray(sys_scores)
-            # import ipdb; ipdb.set_trace()
             gs_scores = np.asarray(gs_scores)
-            mean = sys_scores[~np.isnan(sys_scores)].mean()
 
-            # print(sys_scores.shape)
+            # Comes into account only for google news word vectors, to ignore empty sentences
             nans = np.isnan(sys_scores)
-            # sys_scores[np.isnan(sys_scores)] = -1
             sys_scores = sys_scores[~nans]
             sys_scores = np.around(sys_scores, 10)
             gs_scores = gs_scores[~nans]
-            # print(sys_scores.shape)
 
             # Truncate to tenth digit precision
             # This affects results for Arora's model hugely
             sys_scores = np.around(sys_scores, 10)
-
-            # print(nans.sum(), sys_scores.shape[0], float(nans.sum()) * 100 / (sys_scores).shape[0])
 
             results[dataset] = {'pearson': pearsonr(sys_scores, gs_scores),
                                 'spearman': spearmanr(sys_scores, gs_scores),
@@ -113,11 +104,11 @@ class STSEval(object):
 
                 plt.show()
 
-                # import pdb; pdb.set_trace()
-
             # logging.debug('%s : pearson = %.4f, spearman = %.4f' %
             #               (dataset, results[dataset]['pearson'][0],
             #                results[dataset]['spearman'][0]))
+            logging.debug('%s : spearman = %.4f' %
+                          (dataset, results[dataset]['spearman'][0]))
 
         weights = [results[dset]['nsamples'] for dset in results.keys()]
         list_prs = np.array([results[dset]['pearson'][0] for
@@ -145,7 +136,7 @@ class STSEval(object):
 
 class STS12Eval(STSEval):
     def __init__(self, taskpath, seed=1111):
-        # logging.debug('***** Transfer task : STS12 *****\n\n')
+        logging.debug('***** Transfer task : STS12 *****\n\n')
         self.seed = seed
         self.datasets = ['MSRpar', 'MSRvid', 'SMTeuroparl',
                          'surprise.OnWN', 'surprise.SMTnews']
@@ -155,7 +146,7 @@ class STS12Eval(STSEval):
 class STS13Eval(STSEval):
     # STS13 here does not contain the "SMT" subtask due to LICENSE issue
     def __init__(self, taskpath, seed=1111):
-        # logging.debug('***** Transfer task : STS13 (-SMT) *****\n\n')
+        logging.debug('***** Transfer task : STS13 (-SMT) *****\n\n')
         self.seed = seed
         self.datasets = ['FNWN', 'headlines', 'OnWN']#, 'SMT']
         self.loadFile(taskpath)
@@ -163,7 +154,7 @@ class STS13Eval(STSEval):
 
 class STS14Eval(STSEval):
     def __init__(self, taskpath, seed=1111):
-        # logging.debug('***** Transfer task : STS14 *****\n\n')
+        logging.debug('***** Transfer task : STS14 *****\n\n')
         self.seed = seed
         self.datasets = ['deft-forum', 'deft-news', 'headlines',
                          'images', 'OnWN', 'tweet-news']
@@ -172,7 +163,7 @@ class STS14Eval(STSEval):
 
 class STS15Eval(STSEval):
     def __init__(self, taskpath, seed=1111):
-        # logging.debug('***** Transfer task : STS15 *****\n\n')
+        logging.debug('***** Transfer task : STS15 *****\n\n')
         self.seed = seed
         self.datasets = ['answers-forums', 'answers-students',
                          'belief', 'headlines', 'images']
@@ -181,24 +172,7 @@ class STS15Eval(STSEval):
 
 class STS16Eval(STSEval):
     def __init__(self, taskpath, seed=1111):
-        # logging.debug('***** Transfer task : STS16 *****\n\n')
-        self.seed = seed
-        self.datasets = ['answer-answer', 'headlines', 'plagiarism',
-                         'postediting', 'question-question']
-        self.loadFile(taskpath)
-
-
-class STS17Eval(STSEval):
-    def __init__(self, taskpath, seed=1111):
-        # logging.debug('***** Transfer task : STS16 *****\n\n')
-        self.seed = seed
-        self.datasets = ['train', 'dev', 'test']
-        self.loadFile(taskpath)
-
-
-class SICKEval(STSEval):
-    def __init__(self, taskpath, seed=1111):
-        # logging.debug('***** Transfer task : STS16 *****\n\n')
+        logging.debug('***** Transfer task : STS16 *****\n\n')
         self.seed = seed
         self.datasets = ['answer-answer', 'headlines', 'plagiarism',
                          'postediting', 'question-question']
