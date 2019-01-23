@@ -14,8 +14,6 @@ This code is written in python. The dependencies are:
 * [Autograd](https://github.com/HIPS/autograd/)
 
 
-Note: COCO comes with ResNet-101 2048d image embeddings. [More details on the tasks.](https://arxiv.org/pdf/1705.02364.pdf)
-
 ## Download datasets
 To get all the transfer tasks datasets, run (in data/):
 ```bash
