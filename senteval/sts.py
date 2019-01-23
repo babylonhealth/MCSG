@@ -50,13 +50,17 @@ class STSEval(object):
             self.samples += sent1 + sent2
 
     def do_prepare(self, params, prepare):
+        result = prepare(params, self.samples)
         if 'similarity' in params:
             self.similarity = params.similarity
         else:  # Default similarity is cosine
-            self.similarity = lambda s1, s2: np.nan_to_num(cosine(np.nan_to_num(s1), np.nan_to_num(s2)))
-        return prepare(params, self.samples)
+            def similarity(s1, s2):
+                return np.nan_to_num(cosine(np.nan_to_num(s1), np.nan_to_num(s2)))
 
-    def run(self, params, batcher):
+            self.similarity = similarity
+        self.similarity.result = result
+
+    def run(self, params, batcher, plot=False):
         results = {}
         for dataset in self.datasets:
             sys_scores = []
@@ -69,17 +73,51 @@ class STSEval(object):
                 if len(batch1) == len(batch2) and len(batch1) > 0:
                     enc1 = batcher(params, batch1)
                     enc2 = batcher(params, batch2)
+
                     # for kk in range(enc2.shape[0]):
                     for kk in range(len(enc2)):
+                        # print(params["wvec_dim"])
                         sys_score = self.similarity(enc1[kk], enc2[kk])
                         sys_scores.append(sys_score)
+                        # import pdb; pdb.set_trace()
+            sys_scores = np.asarray(sys_scores)
+            # import ipdb; ipdb.set_trace()
+            gs_scores = np.asarray(gs_scores)
+            mean = sys_scores[~np.isnan(sys_scores)].mean()
+
+            # print(sys_scores.shape)
+            nans = np.isnan(sys_scores)
+            # sys_scores[np.isnan(sys_scores)] = -1
+            sys_scores = sys_scores[~nans]
             sys_scores = np.around(sys_scores, 10)
+            gs_scores = gs_scores[~nans]
+            # print(sys_scores.shape)
+
+            # Truncate to tenth digit precision
+            # This affects results for Arora's model hugely
+            sys_scores = np.around(sys_scores, 10)
+
+            # print(nans.sum(), sys_scores.shape[0], float(nans.sum()) * 100 / (sys_scores).shape[0])
+
             results[dataset] = {'pearson': pearsonr(sys_scores, gs_scores),
                                 'spearman': spearmanr(sys_scores, gs_scores),
                                 'nsamples': len(sys_scores)}
-            logging.debug('%s : pearson = %.4f, spearman = %.4f' %
-                          (dataset, results[dataset]['pearson'][0],
-                           results[dataset]['spearman'][0]))
+
+            if plot:
+                import matplotlib.pyplot as plt
+                pearson = results[dataset]['pearson']
+                spearman = results[dataset]['spearman']
+                plt.plot(sys_scores, gs_scores, 'bo')
+                plt.plot(sys_scores[nans], gs_scores[nans], 'ro')
+                plt.title("pearson {0}, spearman {1}".format(pearson, spearman))
+
+                plt.show()
+
+                # import pdb; pdb.set_trace()
+
+            # logging.debug('%s : pearson = %.4f, spearman = %.4f' %
+            #               (dataset, results[dataset]['pearson'][0],
+            #                results[dataset]['spearman'][0]))
 
         weights = [results[dset]['nsamples'] for dset in results.keys()]
         list_prs = np.array([results[dset]['pearson'][0] for
@@ -96,17 +134,18 @@ class STSEval(object):
                                       'wmean': wavg_pearson},
                           'spearman': {'mean': avg_spearman,
                                        'wmean': wavg_spearman}}
-        logging.debug('ALL (weighted average) : Pearson = %.4f, \
-            Spearman = %.4f' % (wavg_pearson, wavg_spearman))
-        logging.debug('ALL (average) : Pearson = %.4f, \
-            Spearman = %.4f\n' % (avg_pearson, avg_spearman))
+        logging.debug('ALL (weighted average) : Spearman = %.4f' % (wavg_spearman,))
+        # logging.debug('ALL (weighted average) : Pearson = %.4f, \
+        #     Spearman = %.4f' % (wavg_pearson, wavg_spearman))
+        # logging.debug('ALL (average) : Pearson = %.4f, \
+        #     Spearman = %.4f\n' % (avg_pearson, avg_spearman))
 
         return results
 
 
 class STS12Eval(STSEval):
     def __init__(self, taskpath, seed=1111):
-        logging.debug('***** Transfer task : STS12 *****\n\n')
+        # logging.debug('***** Transfer task : STS12 *****\n\n')
         self.seed = seed
         self.datasets = ['MSRpar', 'MSRvid', 'SMTeuroparl',
                          'surprise.OnWN', 'surprise.SMTnews']
@@ -116,15 +155,15 @@ class STS12Eval(STSEval):
 class STS13Eval(STSEval):
     # STS13 here does not contain the "SMT" subtask due to LICENSE issue
     def __init__(self, taskpath, seed=1111):
-        logging.debug('***** Transfer task : STS13 (-SMT) *****\n\n')
+        # logging.debug('***** Transfer task : STS13 (-SMT) *****\n\n')
         self.seed = seed
-        self.datasets = ['FNWN', 'headlines', 'OnWN']
+        self.datasets = ['FNWN', 'headlines', 'OnWN']#, 'SMT']
         self.loadFile(taskpath)
 
 
 class STS14Eval(STSEval):
     def __init__(self, taskpath, seed=1111):
-        logging.debug('***** Transfer task : STS14 *****\n\n')
+        # logging.debug('***** Transfer task : STS14 *****\n\n')
         self.seed = seed
         self.datasets = ['deft-forum', 'deft-news', 'headlines',
                          'images', 'OnWN', 'tweet-news']
@@ -133,7 +172,7 @@ class STS14Eval(STSEval):
 
 class STS15Eval(STSEval):
     def __init__(self, taskpath, seed=1111):
-        logging.debug('***** Transfer task : STS15 *****\n\n')
+        # logging.debug('***** Transfer task : STS15 *****\n\n')
         self.seed = seed
         self.datasets = ['answers-forums', 'answers-students',
                          'belief', 'headlines', 'images']
@@ -142,7 +181,24 @@ class STS15Eval(STSEval):
 
 class STS16Eval(STSEval):
     def __init__(self, taskpath, seed=1111):
-        logging.debug('***** Transfer task : STS16 *****\n\n')
+        # logging.debug('***** Transfer task : STS16 *****\n\n')
+        self.seed = seed
+        self.datasets = ['answer-answer', 'headlines', 'plagiarism',
+                         'postediting', 'question-question']
+        self.loadFile(taskpath)
+
+
+class STS17Eval(STSEval):
+    def __init__(self, taskpath, seed=1111):
+        # logging.debug('***** Transfer task : STS16 *****\n\n')
+        self.seed = seed
+        self.datasets = ['train', 'dev', 'test']
+        self.loadFile(taskpath)
+
+
+class SICKEval(STSEval):
+    def __init__(self, taskpath, seed=1111):
+        # logging.debug('***** Transfer task : STS16 *****\n\n')
         self.seed = seed
         self.datasets = ['answer-answer', 'headlines', 'plagiarism',
                          'postediting', 'question-question']
