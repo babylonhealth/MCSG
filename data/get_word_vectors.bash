@@ -12,14 +12,4 @@ curl -LO $glovepath
 unzip glove.840B.300d.zip 
 rm glove.840B.300d.zip
 
-curl -LO $fasttextpath
-unzip crawl-300d-2M.vec.zip 
-rm crawl-300d-2M.vec.zip
 
-curl -LO $GoogleNewspath
-gunzip GoogleNews-vectors-negative300.bin.gz
-python -c "from gensim.models import word2vec; model = word2vec.Word2Vec.load_word2vec_format('GoogleNews-vectors-negative300.bin', binary=True); model.save('GoogleNews-vectors-negative300.txt')"
-
-cd ../auxiliary_data
-curl -LO $SIF
-cd ..
