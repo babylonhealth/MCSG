@@ -69,8 +69,8 @@ class STSEval(object):
                 if len(batch1) == len(batch2) and len(batch1) > 0:
                     enc1 = batcher(params, batch1)
                     enc2 = batcher(params, batch2)
-
-                    for kk in range(enc2.shape[0]):
+                    # for kk in range(enc2.shape[0]):
+                    for kk in range(len(enc2)):
                         sys_score = self.similarity(enc1[kk], enc2[kk])
                         sys_scores.append(sys_score)
             sys_scores = np.around(sys_scores, 10)
