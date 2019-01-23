@@ -36,8 +36,8 @@ In order to reproduce results please run:
 ```bash
 cd examples
 python arora.py # To reproduce SIF's arora et al results
-python gaussian_aic.py # To reproduce our Gaussian-AIC results
-python vmf.py  # To reproduce our vMF-TIC results
+python gaussian.py # To reproduce our Gaussian-AIC/TIC results
+python vmf.py  # To reproduce our vMF-AIC/TIC results
 ```
 
 This will reproduce the results for **glove.840B.300d.txt** and potentially crash afterwards if you have not downloaded the other word vectors. 
