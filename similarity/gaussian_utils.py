@@ -140,8 +140,3 @@ def get_score_vector(X, mu, var_diag):
     log_prob = ((X - mu) ** 2 / var_diag).sum(axis=1)
     log_det = np.sum(np.log(var_diag))
     return -.5 * (log_prob + D * np.log(2 * np.pi) + log_det)[:, None]
-
-
-
-Collapse 
-10:04 PM
