@@ -15,7 +15,7 @@ import collections
 import senteval
 
 CountsFile = collections.namedtuple('CountsFile', 'name path')
-SIF_CNT = CountsFile(name='sif_counts', path='../data/misc/enwiki_vocab_min200.txt')
+SIF_CNT = CountsFile(name='sif_counts', path='../data/auxiliary_data/enwiki_vocab_min200.txt')
 
 
 # Set PATHs
