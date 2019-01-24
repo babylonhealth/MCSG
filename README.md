@@ -39,3 +39,6 @@ python vmf.py  # To reproduce our vMF-AIC/TIC results
 ```
 
 This will reproduce the results for **glove.840B.300d.txt** and potentially crash afterwards if you have not downloaded the other word vectors. 
+
+### Similarity code
+The entire codebase connected to the similarity metrics described in the paper is encapsulated in the *similarity* folder. This is where the core contributions of our work are.
