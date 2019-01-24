@@ -131,7 +131,7 @@ def batcher(params, batch):
 if __name__ == "__main__":
     transfer_tasks = ['STS12', 'STS13', 'STS14', 'STS15', 'STS16']
     results = []
-    for word_vec in ['fasttext', 'glove', 'word2vec_GN']:
+    for word_vec in ['glove', 'fasttext', 'word2vec_GN']:
         print( 'Word vectors: {0}'.format(word_vec))
         for word_count_path in [None]:
             for norm in [True]:
