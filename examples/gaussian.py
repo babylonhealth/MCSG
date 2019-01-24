@@ -135,14 +135,14 @@ if __name__ == "__main__":
                 'STS14', 'STS15', 'STS16'
     ]
     results = []
-    for word_vec in ['fasttext', 'glove', 'word2vec_GN']:
+    for word_vec in ['glove', 'fasttext', 'word2vec_GN']:
         print('Word vectors: {0}'.format(word_vec))
         for word_count_path in [None]:
         # for word_count_path in [PATH_TO_FREQ]:
             for norm in [False]:
                 # for sim_name in ['gaussian_correction_tic']:
                 # for sim_name in ['gaussian_correction_aic']:
-                for sim_name in ['gaussian_correction_aic_fast']:
+                for sim_name in ['gaussian_correction_aic_fast', 'gaussian_correction_tic']:
                 # for sim_name in ['comparison']:
                 # for sim_name in ['spherical_gaussian_correction_aic']:
                     print('Similarity: {0}'.format(sim_name))
