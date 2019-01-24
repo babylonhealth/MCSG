@@ -3,27 +3,6 @@ import numpy as np
 import numpy.linalg as la
 
 
-def to_cartesian(Phi):
-    """
-    Converts from sphericl hyperpolars
-
-    :params Phi [nxd ndarray]: array vectors of angles
-
-    :return X [nx(d+1) ndarray]: Dataset in cartesian coordinates
-
-    """
-    n, d = Phi.shape
-    X = np.zeros((n, d+1))
-    X[:, 0] = np.cos(Phi[:, 0])
-
-    # can probably be vectorised with a cummulative product
-    for i in xrange(1, d):
-        X[:, i] = np.prod(np.sin(Phi[:,:i]), axis=1) * np.cos(Phi[:,i])
-
-    X[:, d] = np.prod(np.sin(Phi), axis=1)
-    return X
-
-
 def to_cartesian(phi):
     """
     Converts from sphericl hyperpolars
@@ -50,8 +29,8 @@ def fit_mean_direction(X):
 
 def fit_concentration(X):
     """
-    Computes the vMF MLE sol for the concentration  concetration parameter
-    NOTE: This is an approximate solution to a transcendental eq (need to cite)
+    Computes the vMF MLE sol for the concentration parameter
+    NOTE: This is an approximate solution to a transcendental eq
 
     :param X [nxd ndarray]: Design matrix of normalised word vectors
 
@@ -82,8 +61,6 @@ def to_hypersphericalPolars(mu):
 
 def log_vMF_gradient(opt_mu, k, x):
     """
-    Autograd hessian attempt. Definitely buggy , too slow.
-
     :params opt_mu[dx1 ndarray]: optimum direction
     :params k[float]: optimum concentration
     :params x[d, ndarray]: A datapoint to differentiate about
