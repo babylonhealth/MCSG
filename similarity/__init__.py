@@ -5,18 +5,15 @@ from gaussian_utils import aic, aic_spherical, tic, tic_spherical
 
 def von_mises_correction_aic(Dnew, Dc):
     """
-    Atm just a likelihood ratio test. Currently working on creating a model
-    penalty that scales with the data (as opposed to just a constant shift)
-
     :param Dnew[nxd matrix]: set 1
     :param Dc[mxd matrix]: set 2
 
     :return [float]: semantic similarity measure (approximation of the bayes factors)
     """
 
-    # 0 inputs just cause undefined/numerically unstable solutions
+    # If both sentences are empty, the similarity is undefined
     if (Dnew==0).all() or (Dc==0).all():
-        return np.nan # if nan will cleanup later
+        return np.nan
 
     D = np.concatenate((Dnew, Dc), axis=0)
 
@@ -36,9 +33,9 @@ def von_mises_correction_tic(Dnew, Dc):
     :return [float]: semantic similarity measure (approximation of the bayes factors)
     """
 
-    # 0 inputs just cause undefined/numerically unstable solutions
+    # If both sentences are empty, the similarity is undefined
     if (Dnew==0).all() or (Dc==0).all():
-        return np.nan # if nan will cleanup later
+        return np.nan
 
     D = np.concatenate((Dnew, Dc), axis=0)
 
@@ -51,6 +48,14 @@ def von_mises_correction_tic(Dnew, Dc):
 
 
 def gaussian_correction_aic(Dnew, Dc):
+    """
+    :param Dnew[nxd matrix]: set 1
+    :param Dc[mxd matrix]: set 2
+
+    :return [float]: semantic similarity measure (approximation of the bayes factors)
+    """
+
+    # If both sentences are empty, the similarity is undefined
     if Dnew.shape[0] < 2 or Dc.shape[0] < 2:
         return np.nan
 
@@ -65,6 +70,14 @@ def gaussian_correction_aic(Dnew, Dc):
 
 
 def gaussian_correction_aic_fast(Dnew, Dc):
+    """
+    :param Dnew[nxd matrix]: set 1
+    :param Dc[mxd matrix]: set 2
+
+    :return [float]: semantic similarity measure (approximation of the bayes factors)
+    """
+
+    # If both sentences are empty, the similarity is undefined
     K, D = Dnew.shape
     L, D = Dc.shape
     if Dnew.shape[0] < 2 or Dc.shape[0] < 2:
@@ -92,6 +105,14 @@ def gaussian_correction_aic_fast(Dnew, Dc):
 
 
 def spherical_gaussian_correction_aic(Dnew, Dc):
+    """
+    :param Dnew[nxd matrix]: set 1
+    :param Dc[mxd matrix]: set 2
+
+    :return [float]: semantic similarity measure (approximation of the bayes factors)
+    """
+
+    # If both sentences are empty, the similarity is undefined
     if Dnew.shape[0] < 2 or Dc.shape[0] < 2:
         return np.nan
 
@@ -105,6 +126,14 @@ def spherical_gaussian_correction_aic(Dnew, Dc):
 
 
 def gaussian_correction_tic(Dnew, Dc):
+    """
+    :param Dnew[nxd matrix]: set 1
+    :param Dc[mxd matrix]: set 2
+
+    :return [float]: semantic similarity measure (approximation of the bayes factors)
+    """
+
+    # If both sentences are empty, the similarity is undefined
     if Dnew.shape[0] < 2 or Dc.shape[0] < 2:
         return np.nan
 
@@ -120,6 +149,14 @@ def gaussian_correction_tic(Dnew, Dc):
 
 
 def spherical_gaussian_correction_tic(Dnew, Dc):
+    """
+    :param Dnew[nxd matrix]: set 1
+    :param Dc[mxd matrix]: set 2
+
+    :return [float]: semantic similarity measure (approximation of the bayes factors)
+    """
+
+    # If both sentences are empty, the similarity is undefined
     if Dnew.shape[0] < 2 or Dc.shape[0] < 2:
         return np.nan
 
