@@ -1,6 +1,6 @@
 # ICML-2019 Supporting Code for Submission #960
 
-This repo consits of a slight set of modifications for [SentEval](https://github.com/facebookresearch/SentEval) to reproduce results in anonymous submission #960 @ICML2019. 
+This repo consits of a slight set of modifications for [SentEval](https://github.com/facebookresearch/SentEval) to reproduce results in submission #960 @ICML2019. 
 
 **NOTE:** This repo is a **fork** of [SentEval](https://github.com/facebookresearch/SentEval). Any commits prior to 2019 are not associated to submission #960 @ICML2019. 
 
