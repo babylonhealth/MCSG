@@ -4,7 +4,11 @@ import shogun as sg
 import numpy as np
 
 
-# Results on each sub-task when using 128000 bootstrap samples
+# Results on each sub-task when using 128000 bootstrap samples.
+# i.e. We sample n-tuples (method_1, method_2, ..., method_n, human_score) 
+# 128000 times with replacement for a given task and compute the Spearman
+# correlation coeficients for (method_i, human_score) using the boostrap samples
+
 f_gauss = np.array([0.4442,0.7994,0.5552,0.6795,0.4925,0.2429,0.7194,0.6386,0.4713,0.6607,0.6463,0.7522,0.7441,0.6659,0.6080,0.7216,0.6771,0.7343,0.8345,0.6577,0.7351,0.8230,0.8405,0.7240])
 g_gauss = np.array([0.4455,0.7342,0.5259,0.6628,0.4972,0.3312,0.6994,0.5719,0.4133,0.6635,0.6161,0.7262,0.6986,0.6670,0.5613,0.7206,0.6633,0.7151,0.8101,0.6350,0.7159,0.8170,0.8307,0.6667])
 w_gauss = np.array([0.4177,0.7108,0.5980,0.6679,0.5000,0.4016,0.6376,0.6815,0.4375,0.6270,0.6055,0.7348,0.7647,0.6720,0.5525,0.7307,0.7105,0.6752,0.8149,0.5862,0.6769,0.8083,0.8288,0.6793])
