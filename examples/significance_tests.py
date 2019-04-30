@@ -1,5 +1,4 @@
-
-# Copyright 2019 Babylon Partners. All Rights Reserved.
+# Copyright 2019 Babylon Partners Limited. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -20,7 +19,7 @@ import numpy as np
 
 
 # Results on each sub-task when using 128000 bootstrap samples.
-# i.e. We sample n-tuples (method_1, method_2, ..., method_n, human_score) 
+# i.e. We sample n-tuples (method_1, method_2, ..., method_n, human_score)
 # 128000 times with replacement for a given task and compute the Spearman
 # correlation coeficients for {(method_i, human_score)} using the boostrap samples
 
