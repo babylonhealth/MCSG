@@ -1,8 +1,8 @@
-# ICML-2019 Supporting Code for Submission #960
+# ICML-2019 Supporting Code for Submission #960 (Model Comparison for Semantic Grouping)
 
-This repo consits of a slight set of modifications for [SentEval](https://github.com/facebookresearch/SentEval) to reproduce results in anonymous submission #960 @ICML2019. 
+This repo consits of a slight set of modifications for [SentEval](https://github.com/facebookresearch/SentEval) to reproduce results in accepted submission #960 @ICML2019. Manuscript can be found [here](https://arxiv.org/pdf/1904.13323.pdf).
 
-**NOTE:** This repo is a **fork** of [SentEval](https://github.com/facebookresearch/SentEval). Any commits prior to 2019 are not associated to submission #960 @ICML2019. 
+**NOTE:** This repo is a **fork** of [SentEval](https://github.com/facebookresearch/SentEval). Any commits prior to 2019 are not associated to publication #960 @ICML2019 . 
 
 ## Dependencies
 
